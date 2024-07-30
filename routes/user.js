@@ -110,5 +110,28 @@ router.post('/login',(req,res)=>{
     })
 })
 
+//check user
+router.get('/checkEmail/:email',(req,res)=>{
+    User.find({email:req.params.email})
+    .then(result=>{
+        if(result.length > 0)
+        {
+            return res.status(200).json({
+                isAvailable:true
+            })
+        }
+        res.status(200).json({
+            isAvailable:false
+        })
+
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(500).json({
+            error:err
+        })
+    })
+})
+
 module.exports = router;
 
