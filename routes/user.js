@@ -36,8 +36,23 @@ router.post('/signup',(req,res)=>{
     })
     newUser.save()
     .then(result=>{
+        const token = jwt.sign({
+            firstName:result.firstName,
+            lastName:result.lastName,
+            email:result.email,
+            userId:result._id
+        },
+            'sbs 147',
+            {
+                expiresIn:"365d"
+            }
+        )
         res.status(200).json({
-            newUser:result
+            firstName:result.firstName,
+            lastName:result.lastName,
+            email:result.email,
+            userId:result._id,
+            token:token
         })
     })
     .catch(err=>{
