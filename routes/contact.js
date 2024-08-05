@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 router.post('/',checkAuth,(req,res)=>{
     const token = req.headers.authorization.split(" ")[1]
     const verify = jwt.verify(token, 'sbs 147')
-    newContact = newContact({
+    newContact = new Contact({
         _id:new mongoose.Types.ObjectId,
         firstName:req.body.firstName,
         lastName:req.body.lastName,
