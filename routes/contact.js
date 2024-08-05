@@ -7,13 +7,16 @@ const jwt = require('jsonwebtoken')
 
 //add contact
 router.post('/',checkAuth,(req,res)=>{
+    const token = req.headers.authorization.split(" ")[1]
+    const verify = jwt.verify(token, 'sbs 147')
     newContact = newContact({
         _id:new mongoose.Types.ObjectId,
         firstName:req.body.firstName,
         lastName:req.body.lastName,
         email:req.body.email,
         address:req.body.address,
-        phone:req.body.phone
+        phone:req.body.phone,
+        userId:verify.userId
     })
 
     newContact.save()
