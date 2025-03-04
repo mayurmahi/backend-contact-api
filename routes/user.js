@@ -126,27 +126,22 @@ router.post('/login',(req,res)=>{
 })
 
 //check user
-router.get('/checkEmail/:email',(req,res)=>{
-    User.find({email:req.params.email})
-    .then(result=>{
-        if(result.length > 0)
-        {
-            return res.status(200).json({
-                isAvailable:true
-            })
+router.get('/checkEmail/:email', (req, res) => {
+    console.log("Received email:", req.params.email);
+    User.find({ email: req.params.email })
+    .then(result => {
+        console.log("Database result:", result);
+        if (result.length > 0) {
+            return res.status(200).json({ isAvailable: true });
         }
-        res.status(200).json({
-            isAvailable:false
-        })
+        res.status(200).json({ isAvailable: false });
+    })
+    .catch(err => {
+        console.error("Database error:", err);
+        res.status(500).json({ error: err });
+    });
+});
 
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
-    })
-})
 
 module.exports = router;
 
